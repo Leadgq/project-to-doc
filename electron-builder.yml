@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: project-to-doc
+productName: projectToDoc
 directories:
   buildResources: build
 files:
@@ -11,7 +11,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: project-to-doc
+  executableName: projectToDoc
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
