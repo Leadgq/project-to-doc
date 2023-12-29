@@ -5,10 +5,9 @@ import icon from '../../resources/icon.png?asset'
 import './event.js'
 
 function createWindow() {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 421,
+    height: 280,
     show: false,
     alwaysOnTop: true,
     autoHideMenuBar: true,
