@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, dialog } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 const stripComments = require('strip-comments')
 import fs from 'fs'
@@ -10,7 +10,16 @@ const api = {
   },
   saveFile(fileFolderName, suffix = '', isRecursion = false) {
     let content = readerFile(fileFolderName, suffix, isRecursion)
-    ipcRenderer.send('saveFile', content)
+    if (content) {
+      ipcRenderer.send('saveFile', content)
+    } else {
+      dialog.showMessageBox({
+        type: 'error',
+        title: '提示',
+        message: '文件夹下没有文件',
+        buttons: ['确定']
+      })
+    }
   }
 }
 
@@ -26,7 +35,6 @@ const readerFile = (folderPath, suffix = '', isRecursion = false) => {
     } else {
       const sourceCode = fs.readFileSync(filePath, 'utf8')
       const strippedCode = stripComments(sourceCode).replace(/<!--[\s\S]*?-->/g, '')
-      // console.log(strippedCode)
       if (suffix && path.extname(filePath) === suffix) {
         content += strippedCode + '\n'
       } else if (!suffix) {

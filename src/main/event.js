@@ -1,6 +1,5 @@
 import { ipcMain, dialog, BrowserWindow } from 'electron'
-const officegen = require('officegen')
-import fs from 'fs'
+import { generateDocx, openFile } from './util'
 
 ipcMain.handle('openFileFolder', async () => {
   const { canceled, filePaths } = await dialog.showOpenDialog({
@@ -19,20 +18,26 @@ ipcMain.on('saveFile', async (event, content) => {
     filters: [{ name: 'Word', extensions: ['doc'] }]
   })
   if (!filePath) return
-  let docx = officegen('docx')
-  let pObj = docx.createP()
-  pObj.addText(content)
-  const out = fs.createWriteStream(filePath)
-  out.on('error', function (err) {
-    console.log(err)
-  })
-  docx.generate(out)
-  out.on('close', function () {
+  try {
+    const out = generateDocx(content, filePath)
+    out.on('close', async function () {
+      const { response } = await dialog.showMessageBox({
+        type: 'info',
+        title: '成功',
+        message: '文件保存成功',
+        buttons: ['确定']
+      })
+      // 打开文件
+      if (response === 0) {
+        openFile(filePath)
+      }
+    })
+  } catch (e) {
     dialog.showMessageBox({
-      type: 'info',
-      title: '成功',
-      message: '文件保存成功',
+      type: 'error',
+      title: '失败',
+      message: '文件保存失败,你的后缀名可能不是docx',
       buttons: ['确定']
     })
-  })
+  }
 })
