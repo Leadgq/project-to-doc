@@ -41,3 +41,12 @@ ipcMain.on('saveFile', async (event, content) => {
     })
   }
 })
+
+ipcMain.handle('openFile', async () => {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    properties: ['openFile', 'multiSelections']
+  })
+  if (!canceled) {
+    return filePaths
+  }
+})

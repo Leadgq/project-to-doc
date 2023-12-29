@@ -1,5 +1,6 @@
 const officegen = require('officegen')
 import fs from 'fs'
+const stripComments = require('strip-comments')
 import { dialog } from 'electron'
 const { exec } = require('child_process')
 
@@ -32,4 +33,9 @@ export const openFile = (filePath) => {
       })
     }
   })
+}
+// 转换文件
+export const transform = (path) => {
+  const sourceCode = fs.readFileSync(path, 'utf8')
+  return stripComments(sourceCode).replace(/<!--[\s\S]*?-->/g, '')
 }

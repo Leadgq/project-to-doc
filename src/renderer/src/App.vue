@@ -47,7 +47,19 @@ const focusFileName = async () => {
 }
 
 const save = () => {
-  window.api.saveFile(form.FileFolderName, form.suffix, form.isRecursion)
+  if (form.action === 'folder') {
+    if (!form.FileFolderName) {
+      ElMessage.error('请选择文件夹位置')
+      return
+    }
+    window.api.saveFolderFile(form.FileFolderName, form.suffix, form.isRecursion)
+  } else {
+    if (!form.fileFileName) {
+      ElMessage.error('请选择文件位置')
+      return
+    }
+    window.api.saveFile(form.fileFileName)
+  }
 }
 
 const showTip = () => {
