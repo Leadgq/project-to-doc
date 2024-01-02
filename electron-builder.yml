@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: project-to-doc.app
 productName: projectToDoc
 directories:
   buildResources: build
