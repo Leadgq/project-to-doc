@@ -7,7 +7,7 @@ import './event.js'
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 421,
-    height: 280,
+    height: 310,
     show: false,
     alwaysOnTop: true,
     autoHideMenuBar: true,

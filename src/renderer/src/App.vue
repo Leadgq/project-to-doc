@@ -31,11 +31,12 @@ const suffixOptions = [
   }
 ]
 const form = reactive({
-  action: 'file',
+  action: 'folder',
   FileFolderName: '',
   suffix: '',
   isRecursion: false,
-  fileFileName: ''
+  fileFileName: '',
+  isRemoveComment: true
 })
 
 const focusFileFolder = async () => {
@@ -52,13 +53,18 @@ const save = () => {
       ElMessage.error('请选择文件夹位置')
       return
     }
-    window.api.saveFolderFile(form.FileFolderName, form.suffix, form.isRecursion)
+    window.api.saveFolderFile(
+      form.FileFolderName,
+      form.suffix,
+      form.isRecursion,
+      form.isRemoveComment
+    )
   } else {
     if (!form.fileFileName) {
       ElMessage.error('请选择文件位置')
       return
     }
-    window.api.saveFile(form.fileFileName)
+    window.api.saveFile(form.fileFileName, form.isRemoveComment)
   }
 }
 
@@ -171,6 +177,10 @@ const showFileTips = () => {
             @click="showFileTips"
           />
         </div>
+      </section>
+      <section>
+        <span class="text-sm mr-5"> 去除注释:</span>
+        <el-switch v-model="form.isRemoveComment" size="big" class="mr-3" />
       </section>
       <section class="w-full flex justify-end mt-1">
         <el-button class="w-[50px]" @click="save">转换</el-button>

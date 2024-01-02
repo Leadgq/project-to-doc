@@ -6,8 +6,8 @@ const api = {
   async openFileFolder() {
     return await ipcRenderer.invoke('openFileFolder')
   },
-  saveFolderFile(fileFolderName, suffix = '', isRecursion = false) {
-    let content = readeFolderFile(fileFolderName, suffix, isRecursion)
+  saveFolderFile(fileFolderName, suffix = '', isRecursion = false, isRemoveComment = true) {
+    let content = readeFolderFile(fileFolderName, suffix, isRecursion, isRemoveComment)
     if (content) {
       ipcRenderer.send('saveFile', content)
     } else {
@@ -23,9 +23,9 @@ const api = {
     const files = await ipcRenderer.invoke('openFile')
     return files.join(',') || []
   },
-  saveFile(filePath) {
+  saveFile(filePath, isRemoveComment) {
     const pathList = filePath.split(',')
-    const content = readeFile(pathList)
+    const content = readeFile(pathList, isRemoveComment)
     if (content) {
       ipcRenderer.send('saveFile', content)
     } else {

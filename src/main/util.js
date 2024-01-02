@@ -35,7 +35,8 @@ export const openFile = (filePath) => {
   })
 }
 // 转换文件
-export const transform = (path) => {
+export const transform = (path, isRemoveComment = true) => {
   const sourceCode = fs.readFileSync(path, 'utf8')
+  if (!isRemoveComment) return sourceCode
   return stripComments(sourceCode).replace(/<!--[\s\S]*?-->/g, '')
 }
