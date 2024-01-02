@@ -25,7 +25,7 @@ ipcMain.on('saveFile', async (event, content) => {
         type: 'info',
         title: '成功',
         message: '文件保存成功',
-        buttons: ['确定']
+        buttons: ['打开文件', '确定']
       })
       // 打开文件
       if (response === 0) {
