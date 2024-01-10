@@ -1,7 +1,7 @@
 <script setup>
 import { Help } from '@icon-park/vue-next'
 import { useTipHook, useActionAndSuffixOptionHook, useFormActionHook } from './hooks.js'
-const { showTip, showFoldTips, showSufiTips, showAllTips } = useTipHook()
+const { showTip, showFoldTips, showSufiTips, showAllTips, showFileTips } = useTipHook()
 const { actionOptions, suffixOptions } = useActionAndSuffixOptionHook()
 const { form, focusFileFolder, focusFileName, save, reset } = useFormActionHook()
 </script>
