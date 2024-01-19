@@ -23,7 +23,17 @@ export const openFile = (filePath) => {
   if (!filePath) {
     throw new Error('filePath is empty')
   }
-  exec((process.platform === 'win32' ? 'start' : 'open') + ' ' + filePath, (error) => {
+  const execMap = {
+    darwin: 'open',
+    win32: 'start',
+    linux: 'xdg-open',
+    win64: 'start'
+  }
+  const cmd = execMap[process.platform]
+  if (!cmd) {
+    throw new Error('platform is not support')
+  }
+  exec(`${cmd} ${filePath}`, (error) => {
     if (error) {
       dialog.showMessageBox({
         type: 'error',
